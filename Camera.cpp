@@ -7,7 +7,6 @@
  */
 
 #include "Camera.h"
-#include <glm/fwd.hpp>
 #include "Affine.h"
 
 cs200::Camera::Camera() :
