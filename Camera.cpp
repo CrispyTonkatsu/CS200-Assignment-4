@@ -17,12 +17,10 @@ cs200::Camera::Camera(const glm::vec4 &C, const glm::vec4 &v, float W, float H) 
     center_point(C), right_vector(vector(-v.y, v.x)), up_vector(v), rect_width(W), rect_height(H) {}
 
 cs200::Camera &cs200::Camera::moveRight(float x) {
-  // HACK: make sure to later adjust for it to be world units
   center_point = center() + (x * right());
   return *this;
 }
 cs200::Camera &cs200::Camera::moveUp(float y) {
-  // HACK: make sure to later adjust for it to be world units
   center_point = center() + (y * up());
   return *this;
 }
