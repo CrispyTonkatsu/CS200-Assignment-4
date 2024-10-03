@@ -7,6 +7,7 @@
  */
 
 #include "Camera.h"
+#include <glm/fwd.hpp>
 #include "Affine.h"
 
 cs200::Camera::Camera() :
@@ -26,7 +27,12 @@ cs200::Camera &cs200::Camera::moveUp(float y) {
   return *this;
 }
 
-cs200::Camera &cs200::Camera::rotate(float t) { return *this; }
+cs200::Camera &cs200::Camera::rotate(float t) { 
+  glm::mat4 rotation = cs200::rotate(-t);
+  right_vector = rotation * right_vector;
+  up_vector = rotation * up_vector;
+  return *this;
+}
 
 cs200::Camera &cs200::Camera::zoom(float f) {
   right_vector = right() * f;
@@ -48,18 +54,15 @@ glm::mat4 cs200::affineInverse(const glm::mat4 &A) {
       {0, 0, 1, 0},
       {-A[3][0], -A[3][1], 0, 1},
   };
-  return transformation * translation;
+  return (transformation * translation);
 }
 
-glm::mat4 cs200::cameraToWorld(const Camera &cam) {
-  return {cam.right(), cam.up(), vector(0, 0), cam.center()};
+glm::mat4 cs200::cameraToWorld(const Camera &cam) { return {cam.right(), cam.up(), vector(0, 0), cam.center()}; }
+
+glm::mat4 cs200::worldToCamera(const Camera &cam) { return affineInverse(cameraToWorld(cam)); }
+
+glm::mat4 cs200::cameraToNDC(const Camera &cam) {
+  return {{1 / cam.width(), 0, 0, 0}, {0, 1 / cam.height(), 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}};
 }
 
-glm::mat4 cs200::worldToCamera(const Camera &cam) {
-  return affineInverse(cameraToWorld(cam));
-}
-
-glm::mat4 cs200::cameraToNDC(const Camera &cam) {}
-
-glm::mat4 cs200::NDCToCamera(const Camera &cam) {}
-
+glm::mat4 cs200::NDCToCamera(const Camera &cam) { return affineInverse(cameraToNDC(cam)); }

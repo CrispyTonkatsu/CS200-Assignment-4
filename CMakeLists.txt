@@ -32,14 +32,18 @@ target_link_libraries(SquareMesh PRIVATE glm::glm)
 add_library(SolidRender SolidRender.cpp)
 target_link_libraries(SolidRender PRIVATE glm::glm)
 
+# Assignment 4
+add_library(Camera Camera.cpp)
+target_link_libraries(Camera PRIVATE glm::glm)
+
 # Linking all to demo driver
 add_executable(CameraTest CameraTest.cpp)
-target_link_libraries(CameraTest PRIVATE SquareMesh SolidRender Affine OpenGL glm::glm SDL2::SDL2 ${GLEW_LIBRARIES})
+target_link_libraries(CameraTest PRIVATE Camera SquareMesh SolidRender Affine OpenGL glm::glm SDL2::SDL2 ${GLEW_LIBRARIES})
 include_directories(CameraTest ${GLEW_INCLUDE_DIRS})
 
 # Linking all to test driver
 add_executable(InverseTest InverseTest.cpp)
-target_link_libraries(InverseTest PRIVATE SquareMesh SolidRender Affine OpenGL glm::glm SDL2::SDL2 ${GLEW_LIBRARIES})
+target_link_libraries(InverseTest PRIVATE Camera SquareMesh SolidRender Affine OpenGL glm::glm SDL2::SDL2 ${GLEW_LIBRARIES})
 include_directories(InverseTest ${GLEW_INCLUDE_DIRS})
 
 # vim:shiftwidth=2:

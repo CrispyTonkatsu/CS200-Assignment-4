@@ -6,7 +6,7 @@
 //   cl /EHsc CameraTest.cpp Affine.lib SolidRender.lib Camera.cpp SquareMesh.cpp
 //      opengl32.lib glew32.lib SDL2.lib SDL2main.lib /link /subsystem:console
 // Linux command line:
-//   g++ CameraTest.cpp Affine.cpp SolidRender.cpp Camera.cpp SquareMesh.cpp\
+//   g++ CameraTest.cpp Affine.cpp SolidRender.cpp Camera.cpp SquareMesh.cpp
 //       -lGL -lGLEW -lSDL2
 
 #include <GL/glew.h>
@@ -81,7 +81,8 @@ void Client::draw(double dt) {
   glm::mat4 world2ndc = cs200::cameraToNDC(camera) * cs200::worldToCamera(camera);
 
   // draw buildings
-  for (int i = 0; i < buildings.size(); ++i) {
+  size_t building_count = buildings.size();
+  for (size_t i = 0; i < building_count; ++i) {
     glm::mat4 obj2ndc = world2ndc * buildings[i];
     render.setTransform(obj2ndc);
     render.displayFaces(building_colors[i]);
@@ -129,7 +130,7 @@ void Client::resize(int W, int H) {
 //
 /////////////////////////////////////////////////////////////////
 
-int main(int argc, char *argv[]) {
+int main(int , char *[]) {
   srand(unsigned(time(0)));
 
   // SDL: initialize and create a window
