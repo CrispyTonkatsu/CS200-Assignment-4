@@ -15,11 +15,13 @@ cs200::Camera::Camera() :
 cs200::Camera::Camera(const glm::vec4 &C, const glm::vec4 &v, float W, float H) :
     center_point(C), right_vector(vector(0, 0)), up_vector(vector(0, 0)), rect_width(W), rect_height(H) {
   float v_mag = sqrtf(v.x * v.x + v.y * v.y);
+
   if (!near(v_mag, 0)) {
     float v_mag_inv = 1.f/v_mag;
     glm::vec4 v_normalized = {v.x * v_mag_inv, v.y * v_mag_inv, 0, 0};
     up_vector = {v_normalized.x, v_normalized.y, 0, 0};
     right_vector = {-v_normalized.y, v_normalized.x, 0, 0};
+
   }
 }
 
